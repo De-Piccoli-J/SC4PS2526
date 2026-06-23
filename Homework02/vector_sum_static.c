@@ -41,6 +41,8 @@ int main() {
             break; // exit loop early if a mismatch is found    
         }
     }
-
+    if(success==1){
+	printf("Test succeded\n");
+	}
     return 0;
 }

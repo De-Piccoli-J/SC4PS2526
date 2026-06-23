@@ -44,6 +44,8 @@ int main() {
             break; // exit loop early if a mismatch is found    
         }
     }
-    printf("All Test passed!\n");
-    return 0;
+    if(success==1){
+    	printf("Test succeded\n");
+    }
+	return 0;
 }
