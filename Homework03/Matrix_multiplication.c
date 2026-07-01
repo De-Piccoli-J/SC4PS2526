@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 int main(int argc, char *argv[]) {
     if (argc < 5) {
         printf("Error: Missing arguments.\n");
@@ -21,8 +22,8 @@ int main(int argc, char *argv[]) {
     {
         for(int j=0;j<N;j++)
         {
-            A[i][j]=(i==j)?a:0.0f;
-            B[i][j]=(i==j)?b:0.0f;
+            A[i][j]=a;
+            B[i][j]=b;
         }
     }
 
@@ -69,34 +70,41 @@ int main(int argc, char *argv[]) {
 
 
 
+    float epsilon=1e-5;
 
-
-    // check C Naive (only diagonal elements?):
+    // check C Naiv:
     clock_gettime(CLOCK_MONOTONIC, &start);
     int success=0;
     for(int i=0;i<N;i++)
     {
-        if(C[i][i]!=a*b){
-            success=1;
-            printf("Test failed\n");
-            break; // exit loop early if a mismatch is found    
+        for(int j=0;j<N;j++)
+        {
+            if(fabs(C[i][j] - (a * b * N)) > epsilon){
+                success=1;
+            }
         }
         
     }
     if(success==0){
     	printf("Test succeded\n");
     }
+    else{
+        printf("Test failed\n");
+    }
     clock_gettime(CLOCK_MONOTONIC, &end);
     double time_check1 = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
 
     // check C optimized:
     clock_gettime(CLOCK_MONOTONIC, &start);
-    int sum=N*a*b;
+    int sum=N*N*N*a*b;
     for(int i=0;i<N;i++)
     {
-        sum-=C[i][i];
+        for(int j=0;j<N;j++)
+        {
+            sum-=C[i][j];
+        }
     }
-    if(sum==0)
+    if(fabs(sum) > epsilon)
     	printf("Test succeded\n");
     else
         printf("Test failed\n");
