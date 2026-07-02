@@ -21,5 +21,3 @@ and their computing time is benchmarked
 Also 2 checking algoritms are tested and benchmarked:
 - the naive element by element checker (with fix value calculation in the loop)
 - a slightly optimized without branching and with only 1 operation in the loop
-
-They are both $O(N)$ checking algorithms

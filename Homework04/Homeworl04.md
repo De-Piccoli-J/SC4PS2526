@@ -1,7 +1,7 @@
 ## Part 1: Before running anything
 
 1. It tells you the various frequencies component within the sampled signal
-2. - the rate of witch your are measuring (sampling) your signal
+2. - the rate of which your are measuring (sampling) your signal
     - The limit frequency you can sample without aliasing (and is garantied to be reconstructable). it is half the sampling rate
     - how finely you can distinguish two frequencies, the bins in your FFT alorithm
 3. The FFT routine requires equal spacing to exploit regularities and take down the complexity to O(NlogN)
