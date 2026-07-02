@@ -9,7 +9,7 @@ $$
 The programs allow the user to specify from terminal:
 
 - The size $ N*N $ of the matricies A and B
-- The value of the diagonal elements of A and B
+- The value of all the elements of A and B
 - The output file in which the matrix would be written
 
 2 different loops for the algorithm are tested:
