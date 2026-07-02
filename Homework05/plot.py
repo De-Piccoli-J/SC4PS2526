@@ -4,10 +4,6 @@ import matplotlib.pyplot as plt
 # Load the C output
 df = pd.read_csv("legendre_errors.csv")
 
-# ==========================================
-# CLAMP ERRORS TO 1e-17
-# ==========================================
-# Apply a lower bound of 1e-17 to all error columns
 error_cols = ['err_fwd_rel', 'err_bwd_rel', 'err_fwd_abs', 'err_bwd_abs']
 for col in error_cols:
     df[col] = df[col].clip(lower=1e-17)
@@ -36,7 +32,7 @@ for i, x in enumerate(x_values):
     ax.legend()
 
 fig_rel.tight_layout()
-fig_rel.savefig("legendre_relative_errors_plot.png") # Save before show!
+fig_rel.savefig("legendre_relative_errors_plot.png")
 
 # ==========================================
 # PLOT 2: ABSOLUTE ERROR
@@ -50,18 +46,13 @@ for i, x in enumerate(x_values):
     ax = axes_abs[i]
     ax.plot(subset['l'], subset['err_fwd_abs'], 'r.-', label='Forward Recurrence')
     ax.plot(subset['l'], subset['err_bwd_abs'], 'b.-', label='Backward (Miller)')
-    
-    # Optional: If you want the absolute error to also be log-scale so the 1e-17 floor is visible
-    # ax.set_yscale('log') 
-    
+      
     ax.set_title(f'Absolute Error for x = {x}')
     ax.set_xlabel('Degree (ℓ)')
     ax.set_ylabel('Absolute Error')
-    ax.set_ylim(0, 10) # Note: If you switch to log scale, update these limits!
+    ax.set_ylim(0, 10)
     ax.grid(True, which="both", ls="--", alpha=0.5)
     ax.legend()
 
 fig_abs.tight_layout()
-fig_abs.savefig("legendre_absolute_errors_plot.png") # Save before show!
-
-# Show both figures at t
+fig_abs.savefig("legendre_absolute_errors_plot.png") 
