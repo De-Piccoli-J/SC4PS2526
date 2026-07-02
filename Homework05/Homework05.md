@@ -8,13 +8,25 @@ This folder contains a C program computing Legendre polynomials using recurrence
 
 
 ### Questions & Answers
+Every three-term recurrence relation has two linearly independent mathematical solutions. In most standard applications, these two solutions diverge in magnitude as the step index increases having a dominant and minimal solution
 
-**Why does the three-term recurrence have a "dominant" and a "minimal" solution, and why does forward recurrence tend to amplify the dominant mode, leading to instability?**
-Second-order linear recurrences yield two independent solutions. As the degree increases, one typically grows rapidly (dominant) while the other decays (minimal). In forward recurrence, finite-precision floating-point round-off errors inevitably introduce a tiny fraction of the dominant solution. This error grows exponentially as you iterate, quickly overwhelming the minimal solution.
+When evaluating Legendre polynomials within the standard domain $x \in (-1, 1)$, the recurrence relation behaves uniquely. The two independent solutions are the Legendre functions of the first kind, $P_\ell(x)$, and the second kind, $Q_\ell(x)$. 
 
-**Why does backward recurrence suppress the unstable solution and is therefore stable (Miller’s idea)?**
-Iterating backwards reverses the growth behavior: the mathematically dominant solution decays, and the minimal solution grows. Starting with an arbitrary guess at a high degree ensures that any dominant error component rapidly vanishes as you step downward, allowing the minimal solution to emerge clearly. 
 
-**How does this relate to conditioning vs. stability?**
-* **Conditioning** describes the mathematical problem: Legendre polynomials are well-conditioned near $x=1$, meaning the exact true answer is not highly sensitive to small changes in $x$.
-* **Stability** describes the algorithm: An algorithm is unstable if it internally amplifies rounding errors (like forward recurrence trying to find a minimal solution). Thus, an unstable algorithm can fail even when solving a perfectly well-conditioned problem.
+$$P_\ell(\cos\theta) \sim \sqrt{\frac{2}{\pi \ell \sin\theta}} \cos\!\left((\ell+\tfrac{1}{2})\theta - \tfrac{\pi}{4}\right)$$
+
+$$Q_\ell(\cos\theta) \sim \sqrt{\frac{\pi}{2\ell \sin\theta}} \sin\!\left((\ell+\tfrac{1}{2})\theta - \tfrac{\pi}{4}\right)$$
+
+### Forward Case
+  
+   In the forward case both independent solutions to the recurrence $P_\ell(x)$ and $Q_\ell(x)$ decay at the exact same rate ($O(\ell^{-1/2})$). Because neither solution dominates the other, numerical errors do not compound exponentially. The forward iteration safely maintains machine precision.
+
+### Backward Case
+Miller's algorithm only works when computing a strictly minimal solution—one that decays exponentially faster than the alternative. Since $P_\ell$ and $Q_\ell$ share similar magnitudes in this domain, backward iteration cannot isolate $P_\ell$. It instead produces a corrupted, arbitrary mix of both functions, leading to massive relative errors.
+
+### Connection to Spherical Harmonics
+Zonal spherical harmonics, $Y_{\ell 0}$, are simply $P_\ell(x)$ multiplied by an exact constant: 
+
+$$Y_{\ell 0}(\theta, \phi) = \sqrt{\frac{2\ell+1}{4\pi}}\,P_\ell(\cos\theta)$$
+
+Because this scaling factor is small (roughly 2.0 for $\ell=50$), the stability of the forward recurrence translates directly into highly accurate spherical harmonics.
