@@ -22,12 +22,12 @@ plt.legend()
 plt.savefig("Ex4_plot.png")
 
 plt.figure()
-plt.plot(df['CDF_x'],df['CDF_y'],color='b',linewidth=2, label='EXP CDF')
+plt.plot(df['CDF_x'],df['CDF_y'],color='b',linewidth=2, label='Empirical CDF')
 
 y_vals = np.linspace(0.001, 8.0, 100)
 curve = 1.0 - np.exp(-1.5 * y_vals)
 
-plt.plot(y_vals, curve, color='r', linestyle='--', linewidth=2, label=r'TH CDF')
+plt.plot(y_vals, curve, color='r', linestyle='--', linewidth=2, label=r'Theoretical CDF')
 
 plt.xlabel('y values')
 plt.ylabel('Frequency')

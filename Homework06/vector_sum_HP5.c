@@ -4,7 +4,7 @@
 #include <math.h>
 #include <hdf5.h>
 
-
+//compile with gcc vector_sum_HP5.c -I/usr/include/hdf5/serial -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5
 void parse_config(const char *filename, int *n, int *chunk_size, double *a, double *x, double *y) {
     FILE *file = fopen(filename, "r");
     if (!file) {

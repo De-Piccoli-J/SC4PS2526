@@ -1,3 +1,5 @@
+// Compile with: gcc Ex4_5.c -lm
+
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
